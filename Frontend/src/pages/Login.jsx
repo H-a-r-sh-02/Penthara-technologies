@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { loginUser } from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -13,6 +14,7 @@ export default function Login() {
     try {
       const res = await loginUser(form);
       localStorage.setItem("token", res.data.token);
+      toast.success("Logged in successfully!");
       navigate("/dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Invalid credentials");
@@ -20,7 +22,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen grid place-items-center">
+    <div className="min-h-screen grid place-items-center bg-zinc-200">
       <form onSubmit={submit} className="w-[380px] bg-white p-6 rounded-2xl shadow">
         <h1 className="text-2xl font-bold mb-4">Login</h1>
         {error && <p className="text-sm text-red-500 mb-2">{error}</p>}

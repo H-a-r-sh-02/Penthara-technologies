@@ -12,11 +12,11 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
-// AUTH
+// AUTH APIS
 export const registerUser = (payload) => API.post("/auth/register", payload);
 export const loginUser = (payload) => API.post("/auth/login", payload);
 
-// EMPLOYEES
+// EMPLOYEES APIS
 export const getEmployees = () => API.get("/employees");
 export const createEmployee = (payload) => API.post("/employees", payload);
 export const updateEmployee = (id, payload) => API.put(`/employees/${id}`, payload);
