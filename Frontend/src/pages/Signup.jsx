@@ -1,64 +1,39 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import API from "../services/api";
+import { registerUser } from "../services/api";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ name:"", email:"", password:"" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSignup = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+    setError("");
     try {
-      await API.post("/auth/signup", { name, email, password });
-      alert("Signup successful! Please login.");
-      navigate("/");
+      await registerUser(form);
+      navigate("/login");
     } catch (err) {
-      alert("User already exists!");
+      setError(err.response?.data?.message || "Signup failed");
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded shadow-md w-80">
-        <h2 className="text-xl font-bold mb-4">Signup</h2>
-        <form onSubmit={handleSignup}>
-          <input
-            type="text"
-            placeholder="Name"
-            className="border p-2 w-full mb-3"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            className="border p-2 w-full mb-3"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="border p-2 w-full mb-3"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className="bg-green-500 text-white px-4 py-2 rounded w-full">
-            Signup
-          </button>
-        </form>
-        <p className="mt-3 text-sm">
-          Already have an account?{" "}
-          <span
-            className="text-blue-600 cursor-pointer"
-            onClick={() => navigate("/")}
-          >
-            Login
-          </span>
+    <div className="min-h-screen grid place-items-center">
+      <form onSubmit={submit} className="w-[380px] bg-white p-6 rounded-2xl shadow">
+        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
+        {error && <p className="text-sm text-red-500 mb-2">{error}</p>}
+        <input className="w-full border rounded p-2 mb-2" placeholder="Name"
+               onChange={(e)=>setForm({...form, name:e.target.value})} required />
+        <input className="w-full border rounded p-2 mb-2" placeholder="Email" type="email"
+               onChange={(e)=>setForm({...form, email:e.target.value})} required />
+        <input className="w-full border rounded p-2 mb-4" placeholder="Password" type="password"
+               onChange={(e)=>setForm({...form, password:e.target.value})} required />
+        <button className="w-full bg-green-600 text-white py-2 rounded">Create account</button>
+        <p className="text-sm mt-3">
+          Already have an account? <Link to="/login" className="text-blue-600">Login</Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 }

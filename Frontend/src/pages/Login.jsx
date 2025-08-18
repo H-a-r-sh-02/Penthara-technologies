@@ -1,56 +1,38 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import API from "../services/api";
+import { loginUser } from "../services/api";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const submit = async (e) => {
     e.preventDefault();
+    setError("");
     try {
-      const res = await API.post("/auth/login", { email, password });
+      const res = await loginUser(form);
       localStorage.setItem("token", res.data.token);
       navigate("/dashboard");
     } catch (err) {
-      alert("Invalid credentials");
+      setError(err.response?.data?.message || "Invalid credentials");
     }
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded shadow-md w-80">
-        <h2 className="text-xl font-bold mb-4">Login</h2>
-        <form onSubmit={handleLogin}>
-          <input
-            type="email"
-            placeholder="Email"
-            className="border p-2 w-full mb-3"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            className="border p-2 w-full mb-3"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <button className="bg-blue-500 text-white px-4 py-2 rounded w-full">
-            Login
-          </button>
-        </form>
-        <p className="mt-3 text-sm">
-          Don’t have an account?{" "}
-          <span
-            className="text-blue-600 cursor-pointer"
-            onClick={() => navigate("/signup")}
-          >
-            Signup
-          </span>
+    <div className="min-h-screen grid place-items-center">
+      <form onSubmit={submit} className="w-[380px] bg-white p-6 rounded-2xl shadow">
+        <h1 className="text-2xl font-bold mb-4">Login</h1>
+        {error && <p className="text-sm text-red-500 mb-2">{error}</p>}
+        <input className="w-full border rounded p-2 mb-2" placeholder="Email" type="email"
+               onChange={(e)=>setForm({...form, email:e.target.value})} required />
+        <input className="w-full border rounded p-2 mb-4" placeholder="Password" type="password"
+               onChange={(e)=>setForm({...form, password:e.target.value})} required />
+        <button className="w-full bg-blue-600 text-white py-2 rounded">Login</button>
+        <p className="text-sm mt-3">
+          Don’t have an account? <Link to="/signup" className="text-blue-600">Sign Up</Link>
         </p>
-      </div>
+      </form>
     </div>
   );
 }

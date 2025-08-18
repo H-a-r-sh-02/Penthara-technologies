@@ -1,80 +1,18 @@
-import { useState } from "react";
-
-export default function EmployeeForm({ onSubmit }) {
-  const [formData, setFormData] = useState({
-    name: "",
-    role: "",
-    department: "",
-    email: "",
-    office: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-    setFormData({ name: "", role: "", department: "", email: "", office: "" });
-  };
-
+export default function EmployeeForm({ onSubmit, form, setForm }) {
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white p-4 shadow rounded mb-4 grid grid-cols-2 gap-4"
-    >
-      <input
-        type="text"
-        name="name"
-        placeholder="Name"
-        className="border p-2"
-        value={formData.name}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="role"
-        placeholder="Role"
-        className="border p-2"
-        value={formData.role}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="department"
-        placeholder="Department"
-        className="border p-2"
-        value={formData.department}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        className="border p-2"
-        value={formData.email}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="text"
-        name="office"
-        placeholder="Office"
-        className="border p-2"
-        value={formData.office}
-        onChange={handleChange}
-        required
-      />
-      <button
-        type="submit"
-        className="col-span-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        Save Employee
-      </button>
+    <form onSubmit={(e)=>{ e.preventDefault(); onSubmit(); }}
+      className="bg-white rounded-xl shadow p-4 grid gap-2 md:grid-cols-5">
+      <input className="border p-2 rounded" placeholder="Name" value={form.name}
+             onChange={(e)=>setForm({...form, name:e.target.value})} required/>
+      <input className="border p-2 rounded" placeholder="Role" value={form.role}
+             onChange={(e)=>setForm({...form, role:e.target.value})} required/>
+      <input className="border p-2 rounded" placeholder="Department" value={form.department}
+             onChange={(e)=>setForm({...form, department:e.target.value})} required/>
+      <input className="border p-2 rounded" placeholder="Email (optional)" value={form.email || ""}
+             onChange={(e)=>setForm({...form, email:e.target.value})}/>
+      <input className="border p-2 rounded" placeholder="Office (optional)" value={form.office || ""}
+             onChange={(e)=>setForm({...form, office:e.target.value})}/>
+      <button className="md:col-span-5 bg-blue-600 text-white rounded py-2">Save</button>
     </form>
   );
 }
