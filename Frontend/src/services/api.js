@@ -2,7 +2,7 @@ import axios from "axios";
 
 // hardcoded baseURL to avoid :5000 issue
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: import.meta.env.VITE_BACKEND_URL
 });
 
 // attach token
