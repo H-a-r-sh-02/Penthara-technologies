@@ -89,22 +89,22 @@ export default function Dashboard() {
   return (
     <div className="p-6 max-w-6xl mx-auto">
       {/* 🔹 Header */}
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-extrabold text-gray-800">👨‍💼 Employee Dashboard</h1>
-        <div className="flex gap-3">
+      <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 p-4 shadow-md bg-white rounded-lg">
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold flex items-center gap-2 text-gray-800"><span>👨‍💼</span> Employee Dashboard</h1>
+        <div className="flex gap-2">
           <button
             onClick={() => {
               setFormVisible(!formVisible);
               setEditId(null);
               setFormData({ name: "", role: "", department: "", email: "", office: "" });
             }}
-            className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-5 py-2 rounded-xl shadow-md transition-all"
+            className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 sm:px-5 py-2 rounded-xl text-sm text-base shadow-md hover:scale-105 transition"
           >
             {formVisible ? "Cancel" : "+ Add Employee"}
           </button>
           <button
             onClick={handleLogout}
-            className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-5 py-2 rounded-xl shadow-md transition-all"
+            className="bg-red-500 text-white px-4 sm:px-5 py-2 rounded-xl text-sm sm:text-base shadow-md hover:scale-105 transition"
           >
             🚪 Logout
           </button>
