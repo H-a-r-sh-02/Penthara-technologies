@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { registerUser } from "../services/api";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify"
 
 export default function Signup() {
   const [form, setForm] = useState({ name:"", email:"", password:"" });
