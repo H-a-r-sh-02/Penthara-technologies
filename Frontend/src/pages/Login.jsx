@@ -22,7 +22,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen grid place-items-center bg-zinc-200">
+    <div className="h-screen overflow-hidden grid place-items-center bg-zinc-200">
       <form onSubmit={submit} className="w-[380px] bg-white p-6 rounded-2xl shadow">
         <h1 className="text-2xl font-bold mb-4">Login</h1>
         {error && <p className="text-sm text-red-500 mb-2">{error}</p>}
