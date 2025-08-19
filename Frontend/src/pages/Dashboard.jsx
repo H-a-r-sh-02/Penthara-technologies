@@ -87,7 +87,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="p-6 h-screen max-w-6xl mx-auto bg-zinc-200">
       {/* 🔹 Header */}
       <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 p-4 shadow-md bg-white rounded-lg">
         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold flex items-center gap-2 text-gray-800"><span>👨‍💼</span> Employee Dashboard</h1>
@@ -117,7 +117,7 @@ export default function Dashboard() {
         placeholder="🔍 Search by name or department..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="border p-3 mb-5 w-full rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
+        className="border p-3 mt-4 mb-5 w-full rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
       />
 
       {/* 🔹 Add / Edit Employee Form */}
