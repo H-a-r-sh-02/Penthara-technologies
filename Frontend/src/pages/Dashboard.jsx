@@ -4,19 +4,30 @@ import { useNavigate } from "react-router-dom";
 import { getEmployees, createEmployee, updateEmployee, removeEmployee } from "../services/api";
 
 export default function Dashboard() {
+
+  // ✅ For employees
   const [employees, setEmployees] = useState([]);
+
+  // ✅ For form visibility
   const [formVisible, setFormVisible] = useState(false);
+
+  // ✅ For form data
   const [formData, setFormData] = useState({ name: "", role: "", department: "", email: "", office: "" });
+
+  // ✅ For searching
   const [search, setSearch] = useState("");
-  const [editId, setEditId] = useState(null); // ✅ For Update
+
+  // ✅ For editing
+  const [editId, setEditId] = useState(null); 
 
   const navigate = useNavigate();
 
-  // 🔹 Fetch employees from backend on mount
+  //  Fetch employees from backend on mount
   useEffect(() => {
     fetchEmployees();
   }, []);
 
+  // Here we're fetching employees
   const fetchEmployees = async () => {
     try {
       const { data } = await getEmployees();
@@ -26,14 +37,14 @@ export default function Dashboard() {
     }
   };
 
-  // 🔹 Logout
+  // For logout
   const handleLogout = () => {
     localStorage.removeItem("token");
     toast.info("Logged out successfully!");
     navigate("/login");
   };
 
-  // 🔹 Add / Update Employee
+  // Add / Update Employee
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.role || !formData.department) {
@@ -52,16 +63,23 @@ export default function Dashboard() {
         toast.success("Employee added successfully!");
       }
 
-      fetchEmployees(); // Refresh employee list
+      // Refresh employee list
+      fetchEmployees(); 
+
+      // Reset form
       setFormData({ name: "", role: "", department: "", email: "", office: "" });
+      
+      // Close form
       setFormVisible(false);
+
+      // Reset editId
       setEditId(null);
     } catch (err) {
       toast.error("Failed to save employee!");
     }
   };
 
-  // 🔹 Delete Employee
+  //  Delete Employee
   const handleDelete = async (id) => {
     try {
       await removeEmployee(id);
@@ -72,14 +90,14 @@ export default function Dashboard() {
     }
   };
 
-  // 🔹 Edit Employee (prefill form)
+  //  Edit Employee (prefill form wwhen click edit)
   const handleEdit = (employee) => {
     setFormData(employee);
     setFormVisible(true);
     setEditId(employee._id);
   };
 
-  // 🔹 Search filter
+  // Search filter according to name or department
   const filteredEmployees = employees.filter(
     (emp) =>
       emp.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -88,9 +106,9 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 h-screen max-w-6xl mx-auto bg-zinc-200">
-      {/* 🔹 Header */}
+      {/* Header Section */}
       <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 p-4 shadow-md bg-white rounded-lg">
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold flex items-center gap-2 text-gray-800"><span>👨‍💼</span> Employee Dashboard</h1>
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold flex items-center gap-2 text-gray-800"> Employee Dashboard</h1>
         <div className="flex gap-2">
           <button
             onClick={() => {
@@ -106,12 +124,12 @@ export default function Dashboard() {
             onClick={handleLogout}
             className="bg-red-500 text-white px-4 sm:px-5 py-2 rounded-xl text-sm sm:text-base shadow-md hover:scale-105 transition"
           >
-            🚪 Logout
+           Logout
           </button>
         </div>
       </div>
 
-      {/* 🔹 Search Bar */}
+      {/* Search Bar Section */}
       <input
         type="text"
         placeholder="🔍 Search by name or department..."
@@ -120,7 +138,7 @@ export default function Dashboard() {
         className="border p-3 mt-4 mb-5 w-full rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 outline-none"
       />
 
-      {/* 🔹 Add / Edit Employee Form */}
+      {/* Add / Edit Employee Form Section */}
       {formVisible && (
         <form
           onSubmit={handleSubmit}
@@ -173,7 +191,7 @@ export default function Dashboard() {
         </form>
       )}
 
-      {/* 🔹 Employee Table */}
+      {/* Employee Table Section */}
       <div className="overflow-x-auto shadow-lg rounded-xl border border-gray-200">
         <table className="w-full text-sm text-left border-collapse">
           <thead>
