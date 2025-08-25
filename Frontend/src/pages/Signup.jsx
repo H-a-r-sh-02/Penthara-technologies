@@ -6,11 +6,35 @@ import { toast } from "react-toastify"
 export default function Signup() {
   const [form, setForm] = useState({ name:"", email:"", password:"" });
   const [error, setError] = useState("");
+
+  // Created for Password Strength 
+  const [strength, setStrength] = useState("");
   const navigate = useNavigate();
+
+  // For Checking Password Strength 
+  const checkStrength = (password) => {
+    if (password.length < 6) return "Weak";
+    if ( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
+      return "Strong";
+    }
+    return "Medium";
+  };
+
+  // Logic For Strong Password Validation
+  const validatePassword = (password) => {
+    const regex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
 
   const submit = async (e) => {
     e.preventDefault();
     setError("");
+
+    // Now Chechking the Password if it does not met the criteria!
+    if (!validatePassword(form.password)) {
+      
+    }
+
     try {
       await registerUser(form);
       toast.success("Signup successful");
