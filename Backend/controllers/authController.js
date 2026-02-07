@@ -9,9 +9,8 @@ exports.registerUser = async (req, res) => {
 
     let existing = await User.findOne({ email });
     if (existing) return res.status(400).json({ message: "User already exists" });
-
-    const salt = await bcrypt.genSalt(10);
-    const hashed = await bcrypt.hash(password, salt);
+    
+    const hashed = await bcrypt.hash(password, 10);
 
     const user = await User.create({ name, email, password: hashed });
     return res.status(201).json({ message: "User registered successfully", id: user._id });

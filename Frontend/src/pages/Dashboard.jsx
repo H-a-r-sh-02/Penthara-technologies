@@ -34,6 +34,7 @@ export default function Dashboard() {
       setEmployees(data);
     } catch (err) {
       toast.error("Failed to fetch employees!");
+      console.error(err);
     }
   };
 
@@ -76,6 +77,7 @@ export default function Dashboard() {
       setEditId(null);
     } catch (err) {
       toast.error("Failed to save employee!");
+      console.error(err);
     }
   };
 
@@ -87,6 +89,7 @@ export default function Dashboard() {
       toast.success("Employee deleted successfully!");
     } catch (err) {
       toast.error("Failed to delete employee!");
+      console.error(err);
     }
   };
 
@@ -116,7 +119,7 @@ export default function Dashboard() {
               setEditId(null);
               setFormData({ name: "", role: "", department: "", email: "", office: "" });
             }}
-            className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 sm:px-5 py-2 rounded-xl text-sm text-base shadow-md hover:scale-105 transition"
+            className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 sm:px-5 py-2 rounded-xl text-sm shadow-md hover:scale-105 transition"
           >
             {formVisible ? "Cancel" : "+ Add Employee"}
           </button>

@@ -8,17 +8,7 @@ export default function Signup() {
   const [error, setError] = useState("");
 
   // Created for Password Strength 
-  const [strength, setStrength] = useState("");
   const navigate = useNavigate();
-
-  // For Checking Password Strength 
-  const checkStrength = (password) => {
-    if (password.length < 6) return "Weak";
-    if ( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(password)) {
-      return "Strong";
-    }
-    return "Medium";
-  };
 
   // Logic For Strong Password Validation
   const validatePassword = (password) => {
@@ -30,9 +20,9 @@ export default function Signup() {
     e.preventDefault();
     setError("");
 
-    // Now Chechking the Password if it does not met the criteria!
     if (!validatePassword(form.password)) {
-      
+      setError("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+      return;
     }
 
     try {
