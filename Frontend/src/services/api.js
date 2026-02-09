@@ -13,11 +13,11 @@ API.interceptors.request.use((config) => {
 });
 
 // AUTH APIS
-export const registerUser = (payload) => API.post("/api/auth/register", payload);
-export const loginUser = (payload) => API.post("/api/auth/login", payload);
+export const registerUser = (payload) => API.post("/auth/register", payload);
+export const loginUser = (payload) => API.post("/auth/login", payload);
 
 // EMPLOYEES APIS
-export const getEmployees = () => API.get("api/employees");
-export const createEmployee = (payload) => API.post("api/employees", payload);
-export const updateEmployee = (id, payload) => API.put(`api/employees/${id}`, payload);
-export const removeEmployee = (id) => API.delete(`api/employees/${id}`);
+export const getEmployees = () => API.get("/employees");
+export const createEmployee = (payload) => API.post("/employees", payload);
+export const updateEmployee = (id, payload) => API.put(`/employees/${id}`, payload);
+export const removeEmployee = (id) => API.delete(`/employees/${id}`);
